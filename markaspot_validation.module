@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Service_request module file.
+ */
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function markaspot_validation_entity_bundle_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type, $bundle) {
+  if ($entity_type->id() == 'node') {
+
+    switch ($bundle) {
+      case 'service_request':
+
+        $field = $fields['field_address'];
+        $field->addConstraint('ValidLocality', []);
+        var_dump($field);
+
+        /*
+        $field->addPropertyConstraints('value', array('Length' => array(
+          'max' => 10,
+          'maxMessage' => t('%name: may not be longer than @max characters.', array('%name' => 'test',
+            '@max' => 10)),
+        ),));
+        $field->addPropertyConstraints('Range', ['max' => 5]);
+        */
+        // var_dump($field->getItemDefinition()->getConstraints());
+        // die;
+      break;
+    }
+  }
+}

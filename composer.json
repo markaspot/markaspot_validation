@@ -1,0 +1,14 @@
+{
+  "name": "markaspot/markaspot_validation",
+  "description": "Provides some constraints for entities of the Mark-a-Spot ditribution.",
+  "type": "drupal-module",
+  "homepage": "https://github.com/markaspot/markaspot_validation",
+  "authors": [
+    {
+      "name": "Holger Kreis (markaspot)",
+      "homepage": "https://www.drupal.org/u/markaspot",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {}
+}
