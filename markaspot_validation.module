@@ -16,18 +16,6 @@ function markaspot_validation_entity_bundle_field_info_alter(&$fields, \Drupal\C
 
         $field = $fields['field_address'];
         $field->addConstraint('ValidLocality', []);
-        var_dump($field);
-
-        /*
-        $field->addPropertyConstraints('value', array('Length' => array(
-          'max' => 10,
-          'maxMessage' => t('%name: may not be longer than @max characters.', array('%name' => 'test',
-            '@max' => 10)),
-        ),));
-        $field->addPropertyConstraints('Range', ['max' => 5]);
-        */
-        // var_dump($field->getItemDefinition()->getConstraints());
-        // die;
       break;
     }
   }
