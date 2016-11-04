@@ -10,5 +10,8 @@
       "role": "Maintainer"
     }
   ],
-  "require": {}
+  "require": {
+    "phayes/geophp": "^1.2",
+    "weiyongsheng/polygon": "dev-master"
+  }
 }
