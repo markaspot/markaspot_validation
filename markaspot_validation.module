@@ -14,8 +14,12 @@ function markaspot_validation_entity_bundle_field_info_alter(&$fields, \Drupal\C
     switch ($bundle) {
       case 'service_request':
 
-        $field = $fields['field_address'];
-        $field->addConstraint('ValidLocality', []);
+        $address = $fields['field_address'];
+        $address->addConstraint('ValidLocality', []);
+
+        $latlon = $fields['field_geolocation'];
+        $latlon->addConstraint('ValidLatLon');
+
       break;
     }
   }

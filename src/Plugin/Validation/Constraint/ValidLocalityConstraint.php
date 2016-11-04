@@ -7,7 +7,7 @@ namespace Drupal\markaspot_validation\Plugin\Validation\Constraint;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Checks that a given number is even.
+ * Checks that the Locality is valid.
  *
  * @Constraint(
  *   id = "ValidLocality",

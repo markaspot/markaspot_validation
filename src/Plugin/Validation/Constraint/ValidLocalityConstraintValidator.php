@@ -10,7 +10,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 
 /**
- * Validates the EvenNumber constraint.
+ * Validates the Locality constraint.
  */
 class ValidLocalityConstraintValidator extends ConstraintValidator {
   /**
