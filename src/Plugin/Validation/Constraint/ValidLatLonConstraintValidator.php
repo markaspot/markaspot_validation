@@ -63,12 +63,12 @@ class ValidLatLonConstraintValidator extends ConstraintValidator {
   }
 
   static function polygonCheck($lng, $lat){
-
     // Looking for a valid WKT polygon:
-    $module = drupal_get_path('module', 'markaspot_validation');
+    $config = \Drupal::configFactory()
+      ->getEditable('markaspot_validation.settings');
 
-    $path = \Drupal::service('file_system')->realpath($module);
-    $wkt = file_get_contents($path . '/config/wkt/area.wkt');
+    $wkt = $config->get('wkt');
+
     // Transform wkt to json
     $geom = geoPHP::load($wkt,'wkt');
     $json =  $geom->out('json');
