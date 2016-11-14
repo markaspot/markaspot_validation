@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "phayes/geophp": "^1.2",
+    "phayes/geophp": "1.2",
     "weiyongsheng/polygon": "dev-master"
   }
 }
