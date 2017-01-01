@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use geoPHP;
 
-
 /**
  * Validates the LatLon constraint.
  *

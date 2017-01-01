@@ -12,6 +12,7 @@
   ],
   "require": {
     "phayes/geophp": "1.2",
-    "weiyongsheng/polygon": "dev-master"
+    "weiyongsheng/polygon": "dev-master",
+    "anthonymartin/geo-location": "^1.0"
   }
 }
