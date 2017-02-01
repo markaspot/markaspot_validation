@@ -2,8 +2,8 @@
 
 namespace Drupal\markaspot_validation\Plugin\Validation\Constraint;
 
+use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use AnthonyMartin\GeoLocation\GeoLocation as GeoLocation;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -37,25 +37,24 @@ class DoublePostConstraintValidator extends ConstraintValidator {
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The configuration factory.
    */
-  /*
-  public function __construct(ConfigFactoryInterface $config_factory) {
-    $this->configFactory = $config_factory;
+  public function __construct() {
+    // $this->config = \Drupal::service('config.factory')->get('markaspot_validation.settings');.
+    $this->configFactory = \Drupal::config('markaspot_validation.settings');
   }
-  */
-
-  // As long loading via dependency indejection wont work:
-  public function  __construct(){
-      // $this->config = \Drupal::service('config.factory')->get('markaspot_validation.settings');
-      $this->configFactory = \Drupal::config('markaspot_validation.settings');
-  }
-
 
   /**
    * {@inheritdoc}
    */
   public function validate($field, Constraint $constraint) {
-    // Validate latlng.
-    $nids = $this->checkEnvironment(floatval($field->lng), floatval($field->lat));
+
+    $user = \Drupal::currentUser();
+    $user->hasPermission('bypass mas validation');
+    if (!$user->hasPermission('bypass mas validation')) {
+      $nids = $this->checkEnvironment(floatval($field->lng), floatval($field->lat));
+    }
+    else {
+      $nids = [];
+    }
 
     if (count($nids) > 0) {
       $nodes = \Drupal::entityTypeManager()
@@ -66,7 +65,7 @@ class DoublePostConstraintValidator extends ConstraintValidator {
       foreach ($nodes as $node) {
         $options = array('absolute' => TRUE);
         $url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()], $options);
-         $link_options = array (
+        $link_options = array(
           'attributes' => array(
             'class' => array(
               'doublepost',
@@ -77,7 +76,7 @@ class DoublePostConstraintValidator extends ConstraintValidator {
           ),
         );
         $url->setOptions($link_options);
-        $message[] =  \Drupal\Core\Link::fromTextAndUrl(t('We found a recently added, same category report with ID @uuid within a radius of @radius @unit.',
+        $message[] = Link::fromTextAndUrl(t('We found a recently added, same category report with ID @uuid within a radius of @radius @unit.',
           array(
             '@uuid' => $node->uuid(),
             '@radius' => $this->radius,
@@ -93,7 +92,15 @@ class DoublePostConstraintValidator extends ConstraintValidator {
   }
 
   /**
+   * Check environment.
    *
+   * @param float $lng
+   *    The longitude value.
+   * @param float $lat
+   *    The latitude value.
+   *
+   * @return array|int
+   *    Return the nid.
    */
   public function checkEnvironment($lng, $lat) {
     /* load all nodes
@@ -113,10 +120,10 @@ class DoublePostConstraintValidator extends ConstraintValidator {
     $this->days   = $this->configFactory->get('days');
 
     $unit = ($this->unit == 'yards') ? 'miles' : 'kilometers';
-    #$radius = ($unit == 'kilometers') ? (1000/ $this->radius) : (1760 / $this->radius);
+    // $radius = ($unit == 'kilometers') ? (1000/ $this->radius) : (1760 / $this->radius);.
     $point = GeoLocation::fromDegrees($lat, $lng);
 
-    $radius = ($unit == 'kilometers') ? ($this->radius/1000) : ($this->radius / 1760);
+    $radius = ($unit == 'kilometers') ? ($this->radius / 1000) : ($this->radius / 1760);
 
     $coordinates = $point->boundingCoordinates($radius, $unit);
 
