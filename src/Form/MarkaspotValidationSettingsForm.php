@@ -30,24 +30,12 @@ class MarkaspotValidationSettingsForm extends ConfigFormBase {
       '#group' => 'settings',
     );
 
-
-
     $form['markaspot_validation']['wkt'] = array(
       '#type' => 'textarea',
       '#title' => t('Polygon in WKT Format'),
       '#default_value' => $config->get('wkt'),
-      '#description' => t('Place your polygon wkt here.'),
+      '#description' => t('Place your polygon wkt here. You can <a href="@wkt-editor">create and edit</a> the vectors online.', ['@wkt-editor' => 'https://arthur-e.github.io/Wicket/sandbox-gmaps3.html']),
     );
-
-    $locality = $config->get('locality');
-    $form['markaspot_validation']['locality'] = array(
-      '#type' => 'textarea',
-      '#title' => t('Localities that adresses will be validated with.'),
-      '#rows' => 4,
-      '#default_value' => $locality,
-      '#description' => t('Other localities wont be accepted. Put each locality on a separate line'),
-    );
-
 
     $form['markaspot_validation']['radius'] = array(
       '#type' => 'textfield',
@@ -77,38 +65,23 @@ class MarkaspotValidationSettingsForm extends ConfigFormBase {
       '#description' => t('How many days to reach back for similar requests'),
     );
 
-
     return parent::buildForm($form, $form_state);
   }
-
 
   /**
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    #$form_state->set('locality', []);
-    if (!$form_state->isValueEmpty('locality')) {
-      $valid = array();
-      foreach (explode("\n", trim($form_state->getValue('locality'))) as $locality) {
-        $locality = trim($locality);
-        if (!empty($locality)) {
-          $valid[] = $locality;
-        }
-      }
 
-
-    }
     $wkt = trim($form_state->getValue('wkt'));
 
     if (!empty($valid)) {
-      $form_state->set('locality', $valid);
       $form_state->set('wkt', $wkt);
 
     }
 
     parent::validateForm($form, $form_state);
   }
-
 
   /**
    * {@inheritdoc}
@@ -117,7 +90,6 @@ class MarkaspotValidationSettingsForm extends ConfigFormBase {
     $values = $form_state->getValues();
     $this->config('markaspot_validation.settings')
       ->set('wkt', $values['wkt'])
-      ->set('locality', $values['locality'])
       ->set('radius', $values['radius'])
       ->set('unit', $values['unit'])
       ->set('days', $values['days'])

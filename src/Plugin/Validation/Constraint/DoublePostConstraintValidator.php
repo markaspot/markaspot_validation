@@ -76,11 +76,13 @@ class DoublePostConstraintValidator extends ConstraintValidator {
           ),
         );
         $url->setOptions($link_options);
+        $unit = ($this->unit == 'yards') ? 'miles' : 'kilometers';
+
         $message[] = Link::fromTextAndUrl(t('We found a recently added, same category report with ID @uuid within a radius of @radius @unit.',
           array(
             '@uuid' => $node->uuid(),
             '@radius' => $this->radius,
-            '@unit' => $this->unit,
+            '@unit' => $unit,
           )), $url)->toString();
       }
 
@@ -123,7 +125,7 @@ class DoublePostConstraintValidator extends ConstraintValidator {
     // $radius = ($unit == 'kilometers') ? (1000/ $this->radius) : (1760 / $this->radius);.
     $point = GeoLocation::fromDegrees($lat, $lng);
 
-    $radius = ($unit == 'kilometers') ? ($this->radius / 1000) : ($this->radius / 1760);
+    $radius = ($unit == 'meters') ? ($this->radius / 1000) : ($this->radius / 1760);
 
     $coordinates = $point->boundingCoordinates($radius, $unit);
 
