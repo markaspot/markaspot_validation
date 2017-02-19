@@ -17,7 +17,7 @@
     }
   ],
   "require": {
-    "phayes/geophp": "1.2.2",
+    "mishal/GeoPHP": "1.2.2",
     "weiyongsheng/polygon": "dev-master",
     "anthonymartin/geo-location": "^1.0"
   }
