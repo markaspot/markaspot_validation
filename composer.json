@@ -17,7 +17,7 @@
     }
   ],
   "require": {
-    "mishal/geophp": "dev-master",
+    "phayes/geophp": "dev-master",
     "weiyongsheng/polygon": "dev-master",
     "anthonymartin/geo-location": "^1.0"
   }
