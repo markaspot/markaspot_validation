@@ -12,22 +12,12 @@
   ],
   "repositories": [
     {
-      "type": "package",
-      "package": {
-        "name": "mishal/geophp",
-        "version": "1.2.2",
-        "dist": {
-          "url": "https://github.com/mishal/GeoPHP/archive/1.2.2.zip",
-          "type": "zip"
-        },
-        "require": {
-          "composer/installers": "~1.0"
-        }
-      }
+      "type": "vcs",
+      "url": "https://github.com/mishal/GeoPHP"
     }
   ],
   "require": {
-    "mishal/geophp": "1.2.2",
+    "mishal/geophp": "dev-master",
     "weiyongsheng/polygon": "dev-master",
     "anthonymartin/geo-location": "^1.0"
   }

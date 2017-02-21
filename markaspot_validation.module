@@ -14,10 +14,6 @@ function markaspot_validation_entity_bundle_field_info_alter(&$fields, EntityTyp
   if ($entity_type->id() == 'node') {
     switch ($bundle) {
       case 'service_request':
-
-        $address = $fields['field_address'];
-        $address->addConstraint('ValidLocality', []);
-
         $latlon = $fields['field_geolocation'];
         $latlon->addConstraint('ValidLatLon');
         $latlon->addConstraint('DoublePost');
