@@ -4,6 +4,7 @@ namespace Drupal\markaspot_validation\Plugin\Validation\Constraint;
 
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use AnthonyMartin\GeoLocation\GeoLocation as GeoLocation;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -23,6 +24,8 @@ use Symfony\Component\Validator\ConstraintValidator;
  * Class DoublePostConstraintValidator.
  */
 class DoublePostConstraintValidator extends ConstraintValidator {
+
+  use StringTranslationTrait;
 
   /**
    * The config factory.
@@ -78,12 +81,12 @@ class DoublePostConstraintValidator extends ConstraintValidator {
         $url->setOptions($link_options);
         $unit = ($this->unit == 'yards') ? 'miles' : 'kilometers';
 
-        $message[] = Link::fromTextAndUrl(t('We found a recently added, same category report with ID @uuid within a radius of @radius @unit.',
-          array(
+        $message[] = Link::fromTextAndUrl($this->t('We found a recently added, same category report with ID @uuid within a radius of @radius @unit.',
+          [
             '@uuid' => $node->uuid(),
             '@radius' => $this->radius,
             '@unit' => $unit,
-          )), $url)->toString();
+          ]), $url)->toString();
       }
 
       $this->context->addViolation(implode("\n", $message));
