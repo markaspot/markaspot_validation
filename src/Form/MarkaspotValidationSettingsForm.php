@@ -34,7 +34,7 @@ class MarkaspotValidationSettingsForm extends ConfigFormBase {
       '#type' => 'textarea',
       '#title' => t('Polygon in WKT Format'),
       '#default_value' => $config->get('wkt'),
-      '#description' => t('Place your polygon wkt here. You can <a href="@wkt-editor">create and edit</a> the vectors online.', ['@wkt-editor' => 'https://arthur-e.github.io/Wicket/sandbox-gmaps3.html']),
+      '#description' => t('Place your polygon wkt here. You can <a href="@wkt-editor">create and edit</a> the vectors online. Leave this empty, if you don\'t need polygon validation.', ['@wkt-editor' => 'https://arthur-e.github.io/Wicket/sandbox-gmaps3.html']),
     );
 
     $form['markaspot_validation']['radius'] = array(
