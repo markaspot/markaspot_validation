@@ -47,7 +47,7 @@ class ValidLatLonConstraintValidator extends ConstraintValidator {
       $geom = Geo::load($wkt, 'wkt');
       $json = $geom->out('json');
       $data = json_decode($json);
-      $validatePolygon = new Polygon($data->coordinates[0]);
+      $validatePolygon = new \Polygon\Polygon($data->coordinates[0]);
       return $validatePolygon->contain($lng, $lat);
     }
     else {
