@@ -2,17 +2,15 @@
 
 namespace Drupal\markaspot_validation\Plugin\Validation\Constraint;
 
-use Polygon\Polygon;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use GeoPHP\Geo;
+use Polygon\Polygon;
+
 
 /**
  * Validates the LatLon constraint.
  *
- * 1. Get Place in Nominatim, check details, get relation id
- * 2. via https://www.openstreetmap.org/relation/175905
- * 3. http://polygons.openstreetmap.fr/index.py?id=175905
  */
 class ValidLatLonConstraintValidator extends ConstraintValidator {
 
@@ -49,8 +47,8 @@ class ValidLatLonConstraintValidator extends ConstraintValidator {
       $geom = Geo::load($wkt, 'wkt');
       $json = $geom->out('json');
       $data = json_decode($json);
-      $polygon = new Polygon($data->coordinates[0]);
-      return $polygon->contain($lng, $lat);
+      $validatePolygon = new Polygon($data->coordinates[0]);
+      return $validatePolygon->contain($lng, $lat);
     }
     else {
       return TRUE;
